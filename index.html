@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unlimited Text Generator | SHADOW JOKER</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #00d4ff;
+            --secondary-color: #0055ff;
+            --bg-color: #080c14;
+            --card-bg: #111827;
+            --text-color: #f1f5f9;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 15px;
+        }
+
+        .main-card {
+            background: var(--card-bg);
+            width: 100%;
+            max-width: 480px;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+            border: 1px solid #1e293b;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 26px;
+            color: var(--primary-color);
+            margin: 0;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+        }
+
+        .header p {
+            font-size: 13px;
+            color: #94a3b8;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            text-align: left;
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 6px;
+            color: #38bdf8;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #334155;
+            background: #0f172a;
+            color: #fff;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        input:focus { border-color: var(--primary-color); }
+
+        .btn-generate {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #00d4ff, #0055ff);
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        #resultArea {
+            margin-top: 15px;
+            height: 120px;
+            display: none;
+            border-color: #38bdf8;
+        }
+
+        .action-btns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 12px;
+            display: none;
+        }
+
+        .btn-copy { background: #10b981; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer; }
+        .btn-reset { background: #ef4444; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer; }
+
+        /* Footer Credits Section */
+        .footer-credits {
+            margin-top: 25px;
+            border-top: 1px solid #1e293b;
+            padding-top: 15px;
+        }
+
+        .footer-credits h3 {
+            font-size: 18px;
+            margin: 0;
+            color: #fff;
+            letter-spacing: 1px;
+        }
+
+        .footer-credits p {
+            font-size: 12px;
+            color: #64748b;
+            margin: 5px 0 15px 0;
+        }
+
+        .social-box {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .social-box a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 22px;
+            transition: 0.3s;
+            padding: 10px;
+            background: #1e293b;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .social-box a.wa:hover { background: #25d366; box-shadow: 0 0 15px #25d366; }
+        .social-box a.tg:hover { background: #24A1DE; box-shadow: 0 0 15px #24A1DE; }
+
+    </style>
+</head>
+<body>
+
+<div class="main-card">
+    <div class="header">
+        <h1>🚀 Text Multiplier</h1>
+        <p>Cyber Team Help | Professional Edition</p>
+    </div>
+
+    <div class="input-group">
+        <label><i class="fa-solid fa-message"></i> আপনার টেক্সট:</label>
+        <input type="text" id="mainText" placeholder="যেমন: I Love You">
+    </div>
+
+    <div class="input-group">
+        <label><i class="fa-solid fa-list-ol"></i> কতবার (১ - ১০০০০):</label>
+        <input type="number" id="limit" placeholder="যেমন: 500">
+    </div>
+
+    <button class="btn-generate" onclick="generate()">জাদু শুরু করুন ✨</button>
+
+    <textarea id="resultArea" readonly></textarea>
+
+    <div class="action-btns" id="actionGroup">
+        <button class="btn-copy" onclick="copy()"><i class="fa-solid fa-copy"></i> কপি</button>
+        <button class="btn-reset" onclick="location.reload()"><i class="fa-solid fa-trash"></i> রিসেট</button>
+    </div>
+
+    <div class="footer-credits">
+        <h3>SHADOW JOKER</h3>
+        <p>Lead Developer of Cyber Team Help</p>
+        <div class="social-box">
+            <a href="https://wa.me/8801950178309" class="wa" target="_blank" title="WhatsApp">
+                <i class="fa-brands fa-whatsapp"></i>
+            </a>
+            <a href="https://t.me/SHADOW_JOKER_CTH" class="tg" target="_blank" title="Telegram">
+                <i class="fa-brands fa-telegram"></i>
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+    function generate() {
+        const text = document.getElementById('mainText').value;
+        const limit = document.getElementById('limit').value;
+        const result = document.getElementById('resultArea');
+        const actionGroup = document.getElementById('actionGroup');
+
+        if (!text || !limit) {
+            alert("সবগুলো বক্স পূরণ করুন!");
+            return;
+        }
+
+        let output = "";
+        for (let i = 0; i < limit; i++) {
+            output += text + "\n";
+        }
+
+        result.value = output;
+        result.style.display = "block";
+        actionGroup.style.display = "grid";
+    }
+
+    function copy() {
+        const result = document.getElementById('resultArea');
+        result.select();
+        document.execCommand('copy');
+        alert("কপি করা হয়েছে! ✅");
+    }
+</script>
+
+</body>
+</html>
