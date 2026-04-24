@@ -3,193 +3,221 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unlimited Text Generator | SHADOW JOKER</title>
+    <title>Advanced Text Multiplier | SHADOW JOKER</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary-color: #00d4ff;
-            --secondary-color: #0055ff;
-            --bg-color: #080c14;
-            --card-bg: #111827;
-            --text-color: #f1f5f9;
+            --primary: #00f2fe;
+            --secondary: #4facfe;
+            --accent: #ff00c1;
+            --bg-dark: #050b18;
+            --glass: rgba(17, 25, 40, 0.75);
         }
 
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-dark);
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            padding: 15px;
+            overflow: hidden;
+            color: #fff;
         }
 
-        .main-card {
-            background: var(--card-bg);
+        /* Animated Background Particles */
+        .bg-animate {
+            position: absolute;
             width: 100%;
-            max-width: 480px;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
-            border: 1px solid #1e293b;
-            text-align: center;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at center, #102a43 0%, #050b18 100%);
+        }
+
+        /* Glassmorphism Card */
+        .container {
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 30px;
+            width: 90%;
+            max-width: 450px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+            position: relative;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header { text-align: center; margin-bottom: 25px; }
+
+        /* Hacker GIF/Logo */
+        .hacker-gif {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 2px solid var(--primary);
+            box-shadow: 0 0 15px var(--primary);
+            margin-bottom: 10px;
         }
 
         .header h1 {
-            font-size: 26px;
-            color: var(--primary-color);
-            margin: 0;
+            font-size: 24px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             text-transform: uppercase;
-            text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+            letter-spacing: 2px;
         }
 
-        .header p {
-            font-size: 13px;
-            color: #94a3b8;
-            margin-bottom: 20px;
-        }
-
-        .input-group {
-            text-align: left;
-            margin-bottom: 15px;
-        }
-
-        label {
-            display: block;
-            font-size: 14px;
-            margin-bottom: 6px;
-            color: #38bdf8;
-        }
+        .input-box { margin-bottom: 15px; position: relative; }
+        .input-box label { display: block; font-size: 12px; color: var(--primary); margin-bottom: 5px; text-transform: uppercase; }
 
         input, textarea {
             width: 100%;
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid #334155;
-            background: #0f172a;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
             color: #fff;
-            box-sizing: border-box;
             outline: none;
+            transition: 0.3s;
         }
 
-        input:focus { border-color: var(--primary-color); }
+        input:focus { border-color: var(--primary); box-shadow: 0 0 10px rgba(0, 242, 254, 0.3); }
 
-        .btn-generate {
+        .btn-glow {
             width: 100%;
             padding: 14px;
-            border: none;
-            border-radius: 8px;
-            background: linear-gradient(135deg, #00d4ff, #0055ff);
-            color: white;
-            font-weight: bold;
-            font-size: 16px;
-            cursor: pointer;
             margin-top: 10px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: #000;
+            font-weight: 800;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: 0.4s;
+            box-shadow: 0 4px 15px rgba(0, 242, 254, 0.4);
+        }
+
+        .btn-glow:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 25px var(--primary);
+            letter-spacing: 1px;
         }
 
         #resultArea {
             margin-top: 15px;
-            height: 120px;
             display: none;
-            border-color: #38bdf8;
+            height: 100px;
+            resize: none;
+            font-family: monospace;
+            background: #000;
+            border: 1px solid var(--accent);
         }
 
-        .action-btns {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-top: 12px;
-            display: none;
-        }
+        .action-btns { display: none; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
+        .btn-copy { background: #00ff88; color: #000; border: none; padding: 10px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+        .btn-reset { background: #ff4b2b; color: #fff; border: none; padding: 10px; border-radius: 8px; font-weight: bold; cursor: pointer; }
 
-        .btn-copy { background: #10b981; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer; }
-        .btn-reset { background: #ef4444; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer; }
-
-        /* Footer Credits Section */
-        .footer-credits {
-            margin-top: 25px;
-            border-top: 1px solid #1e293b;
-            padding-top: 15px;
-        }
-
-        .footer-credits h3 {
-            font-size: 18px;
-            margin: 0;
-            color: #fff;
-            letter-spacing: 1px;
-        }
-
-        .footer-credits p {
-            font-size: 12px;
-            color: #64748b;
-            margin: 5px 0 15px 0;
-        }
-
-        .social-box {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-        }
-
-        .social-box a {
-            text-decoration: none;
-            color: #fff;
-            font-size: 22px;
-            transition: 0.3s;
-            padding: 10px;
-            background: #1e293b;
-            border-radius: 50%;
-            width: 45px;
-            height: 45px;
+        /* Telegram Join Button Section */
+        .tg-join-btn {
             display: flex;
             align-items: center;
             justify-content: center;
+            background: #24A1DE;
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 50px;
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 14px;
+            animation: pulse 2s infinite;
         }
 
-        .social-box a.wa:hover { background: #25d366; box-shadow: 0 0 15px #25d366; }
-        .social-box a.tg:hover { background: #24A1DE; box-shadow: 0 0 15px #24A1DE; }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(36, 161, 222, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(36, 161, 222, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(36, 161, 222, 0); }
+        }
+
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 15px;
+        }
+
+        .footer h4 { color: var(--primary); letter-spacing: 2px; }
+        .footer p { font-size: 10px; opacity: 0.6; margin-bottom: 10px; }
+
+        .social-icons { display: flex; justify-content: center; gap: 15px; }
+        .social-icons a {
+            color: #fff;
+            font-size: 20px;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+
+        .social-icons a:hover { background: var(--primary); color: #000; transform: translateY(-5px); }
 
     </style>
 </head>
 <body>
 
-<div class="main-card">
+<div class="bg-animate"></div>
+
+<div class="container">
     <div class="header">
-        <h1>🚀 Text Multiplier</h1>
-        <p>Cyber Team Help | Professional Edition</p>
+        <img src="https://cdn.pixabay.com/animation/2023/03/24/09/20/09-20-04-188_512.gif" alt="Hacker" class="hacker-gif">
+        <h1>Text Multiplier</h1>
+        <p style="font-size: 11px; color: var(--secondary);">V3.0 Professional Edition</p>
     </div>
 
-    <div class="input-group">
-        <label><i class="fa-solid fa-message"></i> আপনার টেক্সট:</label>
-        <input type="text" id="mainText" placeholder="যেমন: I Love You">
+    <div class="input-box">
+        <label><i class="fas fa-keyboard"></i> Your Text:</label>
+        <input type="text" id="mainText" placeholder="কি লিখতে চান?">
     </div>
 
-    <div class="input-group">
-        <label><i class="fa-solid fa-list-ol"></i> কতবার (১ - ১০০০০):</label>
-        <input type="number" id="limit" placeholder="যেমন: 500">
+    <div class="input-box">
+        <label><i class="fas fa-sort-amount-up"></i> Limit (1 - 10000):</label>
+        <input type="number" id="limit" placeholder="কতবার রিপিট করবেন?">
     </div>
 
-    <button class="btn-generate" onclick="generate()">জাদু শুরু করুন ✨</button>
+    <button class="btn-glow" onclick="generate()">Generate Magic ✨</button>
 
     <textarea id="resultArea" readonly></textarea>
 
     <div class="action-btns" id="actionGroup">
-        <button class="btn-copy" onclick="copy()"><i class="fa-solid fa-copy"></i> কপি</button>
-        <button class="btn-reset" onclick="location.reload()"><i class="fa-solid fa-trash"></i> রিসেট</button>
+        <button class="btn-copy" onclick="copy()"><i class="fas fa-copy"></i> Copy</button>
+        <button class="btn-reset" onclick="location.reload()"><i class="fas fa-sync-alt"></i> Reset</button>
     </div>
 
-    <div class="footer-credits">
-        <h3>SHADOW JOKER</h3>
-        <p>Lead Developer of Cyber Team Help</p>
-        <div class="social-box">
-            <a href="https://wa.me/8801950178309" class="wa" target="_blank" title="WhatsApp">
-                <i class="fa-brands fa-whatsapp"></i>
-            </a>
-            <a href="https://t.me/SHADOW_JOKER_CTH" class="tg" target="_blank" title="Telegram">
-                <i class="fa-brands fa-telegram"></i>
-            </a>
+    <a href="https://t.me/shadow_joker_cyberteamhelp" target="_blank" class="tg-join-btn">
+        <i class="fab fa-telegram-plane" style="margin-right: 10px;"></i> JOIN TELEGRAM CHANNEL
+    </a>
+
+    <div class="footer">
+        <h4>SHADOW JOKER</h4>
+        <p>Lead Developer | Cyber Team Help</p>
+        <div class="social-icons">
+            <a href="https://wa.me/8801950178309"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://t.me/SHADOW_JOKER_CTH"><i class="fab fa-telegram-plane"></i></a>
         </div>
     </div>
 </div>
@@ -202,7 +230,12 @@
         const actionGroup = document.getElementById('actionGroup');
 
         if (!text || !limit) {
-            alert("সবগুলো বক্স পূরণ করুন!");
+            alert("অনুগ্রহ করে টেক্সট এবং লিমিট দিন!");
+            return;
+        }
+
+        if (limit > 10000) {
+            alert("লিমিট ১০০০০ এর বেশি হতে পারবে না!");
             return;
         }
 
@@ -214,13 +247,21 @@
         result.value = output;
         result.style.display = "block";
         actionGroup.style.display = "grid";
+        
+        // Success animation effect
+        document.querySelector('.container').style.boxShadow = "0 0 40px rgba(0, 242, 254, 0.6)";
     }
 
     function copy() {
         const result = document.getElementById('resultArea');
         result.select();
         document.execCommand('copy');
-        alert("কপি করা হয়েছে! ✅");
+        
+        const copyBtn = document.querySelector('.btn-copy');
+        copyBtn.innerHTML = "<i class='fas fa-check'></i> Copied!";
+        setTimeout(() => {
+            copyBtn.innerHTML = "<i class='fas fa-copy'></i> Copy";
+        }, 2000);
     }
 </script>
 
